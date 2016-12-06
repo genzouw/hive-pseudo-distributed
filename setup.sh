@@ -84,12 +84,21 @@ service mysqld start
 # Hive
 yum install -y \
   hive \
+  hive-metastore \
   hive-server2 \
 ;
 
+mysql -u root -p${MYSQL_ROOT_PASS} --silent -e """\
+create database metastore default character set utf8;
+grant all privileges on metastore.* to hive@'%' identified by 'hive';
+grant all privileges on metastore.* to hive@'localhost' identified by 'hive';
+grant all privileges on metastore.* to hive@'${HADOOP_HOST_NAME}' identified by 'hive';
+"""
+
 chkconfig hive-server2 on
 service hive-server2 start
-
+chkconfig hive-metastore on
+service hive-metastore start
 
 # Sqoop
 yum install -y \
@@ -100,3 +109,10 @@ yum install -y \
 # Append "vagrant" user to "hdfs" group
 gpasswd -a vagrant hdfs
 gpasswd -a vagrant hive
+
+
+#
+cd /usr/local/src
+wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.40.tar.gz
+tar xf mysql-connector-java-5.1.40.tar.gz
+
