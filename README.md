@@ -36,7 +36,7 @@ $ choco install virtualbox
 リポジトリのクローン
 
 ```
-$ git clone git@github.com:tasukujp/hadoop-pseudo-distributed.git
+$ git clone git@github.com:genzouw/hive-pseudo-distributed.git
 ```
 
 
