@@ -100,6 +100,14 @@ service hive-server2 start
 chkconfig hive-metastore on
 service hive-metastore start
 
+
+# HiveServer2
+cp /etc/hive/conf/hive-site.xml{,.bk}
+cat /vagrant/hive-site.xml > /etc/hive/conf/hive-site.xml
+
+cd /usr/lib/hive/lib/; ln -s /usr/local/src/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar
+ls /etc/init.d/{hadoop,hive}*| xargs -n 1 -i{} sudo {} restart
+
 # Sqoop
 yum install -y \
   sqoop \
