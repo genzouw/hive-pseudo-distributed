@@ -89,7 +89,7 @@ yum install -y \
 ;
 
 mysql -u root -p${MYSQL_ROOT_PASS} --silent -e """\
-create database metastore default character set utf8;
+create database metastore;
 grant all privileges on metastore.* to hive@'%' identified by 'hive';
 grant all privileges on metastore.* to hive@'localhost' identified by 'hive';
 grant all privileges on metastore.* to hive@'${HADOOP_HOST_NAME}' identified by 'hive';
